@@ -1,150 +1,292 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Best Wishes ❤️</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Raksha ❤️ Journey</title>
 
-<style>
-body{
-    margin:0;
-    height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    background:linear-gradient(135deg,#ff9a9e,#fad0c4);
-    font-family:Arial,sans-serif;
-    overflow:hidden;
-}
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: sans-serif;
+        }
 
-.card{
-    text-align:center;
-    background:white;
-    padding:30px;
-    border-radius:20px;
-    box-shadow:0 10px 30px rgba(0,0,0,0.2);
-    max-width:500px;
-}
+        body {
+            background: linear-gradient(135deg, #ff4d6d, #ff99ac);
+            overflow: hidden;
+            color: white;
+            text-align: center;
+        }
 
-h1{
-    color:#ff4d6d;
-}
+        /* SCREEN SYSTEM */
+        .screen {
+            display: none;
+            height: 100vh;
+            width: 100vw;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            padding: 20px;
+        }
 
-.buttons{
-    margin-top:20px;
-}
+        .active {
+            display: flex;
+        }
 
-button{
-    padding:12px 25px;
-    border:none;
-    border-radius:30px;
-    font-size:18px;
-    cursor:pointer;
-    margin:10px;
-}
+        /* BUTTONS */
+        button {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 30px;
+            font-size: 18px;
+            cursor: pointer;
+            margin: 10px;
+        }
 
-#yesBtn{
-    background:#28a745;
-    color:white;
-}
+        .pink {
+            background: #ff4d6d;
+            color: white;
+        }
 
-#noBtn{
-    background:#dc3545;
-    color:white;
-    position:absolute;
-}
+        .white {
+            background: white;
+            color: #ff4d6d;
+        }
 
-.success{
-    display:none;
-}
+        /* IMAGES */
+        img {
+            width: 300px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+            margin: 10px;
+        }
 
-.heart{
-    position:absolute;
-    color:red;
-    animation:float 6s linear infinite;
-}
+        /* CHAT BOX */
+        .msg {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 10px;
+            margin: 5px;
+            border-radius: 10px;
+            opacity: 0;
+            animation: fadeIn 1s forwards;
+        }
 
-@keyframes float{
-    from{
-        transform:translateY(100vh);
-        opacity:1;
-    }
-    to{
-        transform:translateY(-100px);
-        opacity:0;
-    }
-}
-</style>
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* HEARTS */
+        .heart {
+            position: absolute;
+            animation: float 6s linear infinite;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh);
+            }
+
+            100% {
+                transform: translateY(-100vh);
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-<div class="card" id="questionCard">
-    <h1>🎉 Congratulations! 🎉</h1>
+    <audio id="music" loop>
+        <source src="music.mp3">
+    </audio>
 
-    <p>
-        Wishing you all the success, happiness and growth in your new company.
-        Your new journey is going to be amazing!
-    </p>
-
-    <h3>
-        Will you remember me and give me something every month? 😄
-    </h3>
-
-    <div class="buttons">
-        <button id="yesBtn">YES ❤️</button>
-        <button id="noBtn">NO 😜</button>
+    <!-- ================= INTRO ================= -->
+    <div class="screen active" id="intro">
+        <h1>✨ Raksha’s Journey ✨</h1>
+        <p>2.5 years of memories… ❤️</p>
+        <button class="pink" onclick="next('chat')">Start Journey</button>
     </div>
-</div>
 
-<div class="card success" id="successCard">
-    <h1>❤️ Thank You ❤️</h1>
+    <!-- ================= CHAT ================= -->
+    <div class="screen" id="chat">
 
-    <p>
-        Since I couldn't give you a proper send-off gift before you left,
-        I promise I'll give you a special gift on your birthday 🎁
-    </p>
+        <h2>💬 Our Journey</h2>
 
-    <h3>
-        Best wishes for your new company! 🚀
-    </h3>
+        <div id="chatBox"></div>
 
-    <p>
-        May you achieve great success, happiness,
-        promotions and everything you dream of.
-    </p>
-</div>
+        <button id="continueBtn" class="pink" style="display:none;" onclick="next('slideScreen')">
+            Continue Journey ❤️
+        </button>
 
-<script>
-const noBtn = document.getElementById('noBtn');
+    </div>
 
-function moveButton(){
-    const x = Math.random() * (window.innerWidth - 120);
-    const y = Math.random() * (window.innerHeight - 60);
+    <!-- ================= SLIDESHOW ================= -->
+    <div class="screen" id="slideScreen">
+        <h2>📸 Memories</h2>
+        <img id="slide" src="photo1.jpg">
+    </div>
 
-    noBtn.style.left = x + 'px';
-    noBtn.style.top = y + 'px';
-}
+    <!-- ================= GAME ================= -->
+    <div class="screen" id="game">
+        <h2>Will you remember Ajay? 😜</h2>
+        <button id="yes" class="pink">YES ❤️</button>
+        <button id="no" class="white">NO 🙈</button>
+    </div>
 
-noBtn.addEventListener('mouseover', moveButton);
-noBtn.addEventListener('touchstart', moveButton);
+    <!-- ================= FINAL ================= -->
+    <div class="screen" id="final">
 
-document.getElementById('yesBtn').addEventListener('click', () => {
+        <h1>❤️ Dear Raksha ❤️</h1>
 
-    document.getElementById('questionCard').style.display='none';
-    document.getElementById('successCard').style.display='block';
+        <p id="finalText" style="max-width:700px;line-height:1.6;"></p>
 
-    for(let i=0;i<50;i++){
-        const heart=document.createElement('div');
-        heart.classList.add('heart');
-        heart.innerHTML='❤️';
-        heart.style.left=Math.random()*100+'vw';
-        heart.style.fontSize=(20+Math.random()*30)+'px';
-        heart.style.animationDuration=(3+Math.random()*5)+'s';
-        document.body.appendChild(heart);
-    }
-});
-</script>
+    </div>
+
+    <script>
+
+        /* NAVIGATION */
+        let screens = document.querySelectorAll(".screen");
+
+        function next(id) {
+
+            screens.forEach(s => s.classList.remove("active"));
+            document.getElementById(id).classList.add("active");
+
+            if (id == "chat") startChat();
+            if (id == "slideScreen") startSlide();
+            if (id == "game") startGame();
+            if (id == "final") typeText();
+        }
+
+        /* MUSIC AUTO PLAY */
+        window.addEventListener("click", () => document.getElementById("music").play(), { once: true });
+
+        /* ================= CHAT (EMOTIONAL JOURNEY) ================= */
+        function startChat() {
+
+            let box = document.getElementById("chatBox");
+            box.innerHTML = "";
+
+            document.getElementById("continueBtn").style.display = "none";
+
+            let msgs = [
+                "❤️ 2.5 years ago our journey started…",
+                "✨ From strangers → Friends → Best Friends → memories…",
+                "😊 Every small talk became special…",
+                "💫 Every moment added meaning to life…",
+                "🌸 You became an important part of this journey…",
+                "❤️ Not just memories, but emotions were created…",
+                "🙏 Thank you for everything, Raksha…",
+                "💖 No matter where life goes, memories remain forever…",
+                "— Ajay ❤️"
+            ];
+
+            let i = 0;
+
+            let t = setInterval(() => {
+
+                if (i < msgs.length) {
+                    let d = document.createElement("div");
+                    d.className = "msg";
+                    d.innerText = msgs[i];
+                    box.appendChild(d);
+                    i++;
+                }
+                else {
+                    clearInterval(t);
+                    document.getElementById("continueBtn").style.display = "inline-block";
+                }
+
+            }, 1100);
+        }
+
+        /* ================= SLIDESHOW ================= */
+        let photos = [
+            "photo1.jpg", "photo2.jpg", "photo3.jpg", "photo4.jpg", "photo5.jpg", "photo6.jpg",
+            "photo7.jpg", "photo8.jpg", "photo9.jpg", "photo10.jpg", "photo11.jpg", "photo12.jpg", "photo13.jpg"
+        ];
+
+        let i = 0;
+        let slideInterval;
+        let started = false;
+
+        function startSlide() {
+
+            if (started) return;
+            started = true;
+
+            i = 0;
+
+            slideInterval = setInterval(() => {
+
+                document.getElementById("slide").src = photos[i];
+                i++;
+
+                if (i >= photos.length) {
+                    clearInterval(slideInterval);
+                    setTimeout(() => next("game"), 1200);
+                }
+
+            }, 1800);
+        }
+
+        /* ================= GAME ================= */
+        let noBtn = document.getElementById("no");
+        let gameStarted = false;
+
+        function startGame() {
+
+            if (gameStarted) return;
+            gameStarted = true;
+
+            noBtn.onmouseover = () => {
+                noBtn.style.position = "absolute";
+                noBtn.style.top = Math.random() * 80 + "vh";
+                noBtn.style.left = Math.random() * 80 + "vw";
+            };
+
+            document.getElementById("yes").onclick = () => {
+                next("final");
+            };
+        }
+
+        /* ================= FINAL TYPE MESSAGE ================= */
+        function typeText() {
+
+            let text =
+                "Some people come into our lives and become a part of our heart. 2.5 years of journey with you will always remain special. Wishing you happiness, success and peace in your new journey. — Ajay ❤️\n\n" +
+
+                "Raksha… please don’t forget me. If not daily, at least call me once a week — a simple video call would mean a lot 😊.\n\n" +
+
+                "I don’t want anything big… just don’t disappear completely from my life.\n\n" +
+
+                "Thank you for all my dear sweety ❤️.\n\n" +
+
+                "If I ever did anything wrong in your life, I am really sorry for that. I never meant to hurt you.\n\n" +
+
+                "And lastly… I just want to say it from my heart…\n\n" +
+
+                "I love youuuuu ❤️❤️❤️";
+
+            let el = document.getElementById("finalText");
+            el.innerHTML = "";
+
+            let i = 0;
+
+            let t = setInterval(() => {
+                if (i < text.length) {
+                    el.innerHTML += text[i];
+                    i++;
+                } else clearInterval(t);
+            }, 35);
+        }
+
+    </script>
 
 </body>
+
 </html>
