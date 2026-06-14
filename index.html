@@ -21,7 +21,6 @@
             text-align: center;
         }
 
-        /* SCREEN SYSTEM */
         .screen {
             display: none;
             height: 100vh;
@@ -36,7 +35,6 @@
             display: flex;
         }
 
-        /* BUTTONS */
         button {
             padding: 12px 25px;
             border: none;
@@ -56,7 +54,6 @@
             color: #ff4d6d;
         }
 
-        /* IMAGES */
         img {
             width: 300px;
             border-radius: 15px;
@@ -64,35 +61,18 @@
             margin: 10px;
         }
 
-        /* CHAT BOX */
         .msg {
             background: rgba(255, 255, 255, 0.2);
             padding: 10px;
             margin: 5px;
             border-radius: 10px;
-            opacity: 0;
             animation: fadeIn 1s forwards;
+            opacity: 0;
         }
 
         @keyframes fadeIn {
             to {
                 opacity: 1;
-            }
-        }
-
-        /* HEARTS */
-        .heart {
-            position: absolute;
-            animation: float 6s linear infinite;
-        }
-
-        @keyframes float {
-            0% {
-                transform: translateY(100vh);
-            }
-
-            100% {
-                transform: translateY(-100vh);
             }
         }
     </style>
@@ -104,14 +84,14 @@
         <source src="music.mp3">
     </audio>
 
-    <!-- ================= INTRO ================= -->
+    <!-- INTRO -->
     <div class="screen active" id="intro">
         <h1>✨ Raksha’s Journey ✨</h1>
         <p>2.5 years of memories… ❤️</p>
         <button class="pink" onclick="next('chat')">Start Journey</button>
     </div>
 
-    <!-- ================= CHAT ================= -->
+    <!-- CHAT -->
     <div class="screen" id="chat">
 
         <h2>💬 Our Journey</h2>
@@ -124,22 +104,21 @@
 
     </div>
 
-    <!-- ================= SLIDESHOW ================= -->
+    <!-- SLIDESHOW -->
     <div class="screen" id="slideScreen">
         <h2>📸 Memories</h2>
         <img id="slide" src="photo1.jpg">
     </div>
 
-    <!-- ================= GAME ================= -->
+    <!-- GAME -->
     <div class="screen" id="game">
         <h2>Will you remember Ajay? 😜</h2>
         <button id="yes" class="pink">YES ❤️</button>
         <button id="no" class="white">NO 🙈</button>
     </div>
 
-    <!-- ================= FINAL ================= -->
+    <!-- FINAL -->
     <div class="screen" id="final">
-
         <h1>❤️ Dear Raksha ❤️</h1>
 
         <p id="finalText" style="max-width:700px;line-height:1.6;"></p>
@@ -148,9 +127,9 @@
 
     <script>
 
-        /* NAVIGATION */
         let screens = document.querySelectorAll(".screen");
 
+        /* NAVIGATION */
         function next(id) {
 
             screens.forEach(s => s.classList.remove("active"));
@@ -162,15 +141,14 @@
             if (id == "final") typeText();
         }
 
-        /* MUSIC AUTO PLAY */
+        /* MUSIC AUTO START */
         window.addEventListener("click", () => document.getElementById("music").play(), { once: true });
 
-        /* ================= CHAT (EMOTIONAL JOURNEY) ================= */
+        /* ================= CHAT ================= */
         function startChat() {
 
             let box = document.getElementById("chatBox");
             box.innerHTML = "";
-
             document.getElementById("continueBtn").style.display = "none";
 
             let msgs = [
@@ -234,8 +212,7 @@
             }, 1800);
         }
 
-        /* ================= GAME ================= */
-        let noBtn = document.getElementById("no");
+        /* ================= GAME (FIXED MOBILE + DESKTOP) ================= */
         let gameStarted = false;
 
         function startGame() {
@@ -243,13 +220,28 @@
             if (gameStarted) return;
             gameStarted = true;
 
-            noBtn.onmouseover = () => {
-                noBtn.style.position = "absolute";
-                noBtn.style.top = Math.random() * 80 + "vh";
-                noBtn.style.left = Math.random() * 80 + "vw";
-            };
+            let noBtn = document.getElementById("no");
+            let yesBtn = document.getElementById("yes");
 
-            document.getElementById("yes").onclick = () => {
+            function moveNo() {
+                noBtn.style.position = "absolute";
+                noBtn.style.top = Math.random() * 70 + 20 + "vh";
+                noBtn.style.left = Math.random() * 70 + 10 + "vw";
+            }
+
+            /* Desktop hover */
+            noBtn.addEventListener("mouseenter", moveNo);
+
+            /* Mobile touch FIX */
+            noBtn.addEventListener("touchstart", function (e) {
+                e.preventDefault();
+                moveNo();
+            });
+
+            /* Backup click protection */
+            noBtn.addEventListener("click", moveNo);
+
+            yesBtn.onclick = () => {
                 next("final");
             };
         }
@@ -262,13 +254,9 @@
 
                 "Raksha… please don’t forget me. If not daily, at least call me once a week — a simple video call would mean a lot 😊.\n\n" +
 
-                "I don’t want anything big… just don’t disappear completely from my life.\n\n" +
+                "Thank you for everything, my dear sweety ❤️.\n\n" +
 
-                "Thank you for all my dear sweety ❤️.\n\n" +
-
-                "If I ever did anything wrong in your life, I am really sorry for that. I never meant to hurt you.\n\n" +
-
-                "And lastly… I just want to say it from my heart…\n\n" +
+                "If I ever hurt you unknowingly, I am truly sorry for that.\n\n" +
 
                 "I love youuuuu ❤️❤️❤️";
 
